@@ -1,0 +1,52 @@
+---
+title: "Fine-Tuned Channel–Spatial Attention Transformer for Facial Expression Recognition"
+summary: "Lightweight FER model combining channel and spatial attention to improve accuracy under limited data."
+publishedAt: "2024-06-10"
+images: 
+  - "/images/projects/rf-emotion-recognition-rf-830x495-1.jpeg"
+team:
+  - name: "Kofi Corletey"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/matey-corletey/"
+  - name: "Ebenezer Acquah"
+    avatar: "/images/projects/project-01/avatar-02.jpg"
+    linkedIn: "https://www.linkedin.com/in/eben-success/"
+
+---
+
+# Channel–Spatial Attention Transformer (CSAT) for FER
+
+> Research‑oriented implementation exploring efficient attention for facial expression recognition under data scarcity.
+
+## Problem
+Facial expression recognition models often overfit on small datasets and struggle with subtle cues. Goal: improve generalization and interpretability without heavy compute.
+
+## Approach
+- Implemented a **Transformer backbone** augmented with **channel** and **spatial** attention modules.
+- Data pipeline with balanced sampling, CutOut/CutMix, and color jitter; face alignment optional.
+- Training with label‑smoothing, cosine LR schedule, and mixed precision.
+
+## Results (illustrative)
+- Competitive accuracy vs. heavier baselines on small/medium FER datasets
+- Attention maps provide interpretable saliency over facial regions (eyes, mouth, brow)
+
+## Repro
+```bash
+python train.py \
+  --model csat_tiny \
+  --dataset fer2013 \
+  --epochs 100 --mixup 0.1 --lr 3e-4 --img-size 224
+```
+
+## What I did
+- Designed attention blocks; integrated into PyTorch module graph
+- Engineered training loop, metrics, and logging
+- Produced attention heatmaps for qualitative analysis
+
+## Next Steps
+- Knowledge distillation into mobile‑sized backbones
+- Domain adaptation for in‑the‑wild expressions
+
+**Stack:** PyTorch, Python, NumPy, Matplotlib
+
+---

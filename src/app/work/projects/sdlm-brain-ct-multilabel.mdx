@@ -1,0 +1,46 @@
+---
+title: "Slice Dependencies Learning Model for Multi‑Label Brain CT Classification"
+summary: "Modeling inter‑slice dependencies to improve multi‑label predictions across head CT scans."
+publishedAt: "2024-04-02"
+images: 
+  - "/images/projects/The-Results-Of-A-Head-CT-Scan.webp"
+team:
+  - name: "Kofi Corletey"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/matey-corletey/"
+  - name: "Ebenezer Acquah"
+    avatar: "/images/projects/project-01/avatar-02.jpg"
+    linkedIn: "https://www.linkedin.com/in/eben-success/"
+---
+
+# SDLM – Multi‑Label Brain CT Classification
+
+> Undergraduate research implementation investigating how encoding slice‑level dependencies can boost clinical triage signals.
+
+## Overview
+Head CT studies are volumetric; single‑slice models miss longitudinal context. SDLM encodes **inter‑slice relationships** to improve detection of multiple findings in a scan.
+
+## Method
+- Preprocess DICOMs → windowing, normalization, slice selection
+- CNN/Transformer backbone over slices; **temporal/slice attention** aggregates context
+- Loss: weighted BCE with focal term; evaluation at both slice and study level
+
+## Dataset & Scale
+- ~1,100 scans curated (train/val/test splits); labels consolidated from reports
+
+## Results (illustrative)
+- Lift in macro‑AUC vs. slice‑independent baselines
+- Better recall on rarer findings after reweighting
+
+## My Contributions
+- Implemented data loaders and augmentation pipeline
+- Built slice‑attention module and training harness
+- Ran ablations on number of slices and aggregation strategies
+
+## Future Work
+- Self‑supervised pretraining on unlabeled scans
+- Clinical calibration and uncertainty estimates
+
+**Stack:** PyTorch, Python, MONAI (optional), NumPy
+
+---
