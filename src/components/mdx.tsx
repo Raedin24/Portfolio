@@ -2,6 +2,15 @@ import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
 import { slugify as transliterate } from "transliteration";
 
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+
+import "katex/dist/katex.min.css";
+
 import {
   Heading,
   HeadingLink,
@@ -77,12 +86,38 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
   );
 }
 
-function slugify(str: string): string {
-  const strWithAnd = str.replace(/&/g, " and "); // Replace & with 'and'
+function slugify(str: unknown): string {
+  if (typeof str !== "string") {
+    // Convert non-string nodes (like React elements or arrays) to plain text
+    if (React.isValidElement(str)) {
+      // If it's a React element, extract its text recursively
+      const extractText = (node: React.ReactNode): string => {
+        if (typeof node === "string") {
+          return node;
+        }
+        if (Array.isArray(node)) {
+          return node.map(extractText).join("");
+        }
+        if (React.isValidElement(node)) {
+          // Type assertion to access props.children
+          const element = node as React.ReactElement<{ children?: React.ReactNode }>;
+          return extractText(element.props.children);
+        }
+        return "";
+      };
+      str = extractText(str);
+    } else if (Array.isArray(str)) {
+      str = str.map((s) => (typeof s === "string" ? s : "")).join("");
+    } else {
+      str = String(str ?? "");
+    }
+  }
+
+  const strWithAnd = (str as string).replace(/&/g, " and ");
   return transliterate(strWithAnd, {
     lowercase: true,
-    separator: "-", // Replace spaces with -
-  }).replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    separator: "-",
+  }).replace(/\-\-+/g, "-");
 }
 
 function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
@@ -90,7 +125,7 @@ function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
     children,
     ...props
   }: Omit<React.ComponentProps<typeof HeadingLink>, "as" | "id">) => {
-    const slug = slugify(children as string);
+    const slug = slugify(children);
     return (
       <HeadingLink marginTop="24" marginBottom="12" as={as} id={slug} {...props}>
         {children}
@@ -102,6 +137,7 @@ function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
 
   return CustomHeading;
 }
+
 
 function createParagraph({ children }: TextProps) {
   return (
@@ -209,5 +245,20 @@ type CustomMDXProps = MDXRemoteProps & {
 };
 
 export function CustomMDX(props: CustomMDXProps) {
-  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />;
+  return (
+    <MDXRemote
+      {...props}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkFrontmatter, remarkGfm, remarkMath],
+          rehypePlugins: [
+            rehypeKatex,
+            rehypeSlug,
+            [rehypeAutolinkHeadings, { behavior: "wrap" }],
+          ],
+        },
+      }}
+      components={{ ...components, ...(props.components || {}) }}
+    />
+  );
 }

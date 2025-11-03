@@ -1,0 +1,64 @@
+---
+title: "Skin Detection using HSV and YCbCr Color Spaces"
+publishedAt: "2023-05-20"
+summary: "A Python + OpenCV project for detecting human skin regions in images using color-space thresholding in HSV and YCbCr."
+images: 
+  - "/images/projects/skin-detection.png"
+---
+
+import CodeBlock from '@/components/mdx/CodeBlock'
+
+## Overview
+
+This project demonstrates **skin detection** using both **HSV** and **YCbCr** color spaces to identify skin-like regions in an image.  
+It's implemented in Python with OpenCV and NumPy, combining two color-space masks for more robust results under varying lighting.
+
+---
+
+## Key Features
+
+- Dual color-space filtering (HSV and YCbCr)  
+- Morphological cleaning and median filtering  
+- Real-time visualization of intermediate and final masks  
+- Easily extendable to video-based skin detection  
+
+---
+
+## Technical Approach
+
+The project leverages two different color spaces to create a more accurate skin detection system:
+
+**HSV Color Space**: Effective for segmenting based on hue and saturation, which are less sensitive to lighting variations.
+
+**YCbCr Color Space**: Particularly useful for skin detection as it separates luminance (Y) from color information (Cb, Cr), making it robust to brightness changes.
+
+By combining masks from both color spaces and applying morphological operations, the system achieves better precision in identifying skin regions while reducing false positives.
+
+---
+
+## Implementation Details
+
+The algorithm follows these key steps:
+
+1. **Color Space Conversion**: Convert input image from BGR to HSV and YCbCr
+2. **Thresholding**: Apply range-based masking for skin tones in both color spaces
+3. **Morphological Operations**: Use opening operations to remove noise and small artifacts
+4. **Mask Fusion**: Combine both masks using bitwise AND operation
+5. **Post-processing**: Apply median filtering and additional morphological cleaning
+6. **Visualization**: Display intermediate and final results for analysis
+
+---
+
+## Results
+
+The dual color-space approach significantly improves detection accuracy compared to using either color space alone. The system effectively handles various skin tones and lighting conditions while minimizing false detections from background objects.
+
+---
+
+## Future Enhancements
+
+- Integration with deep learning models for improved accuracy
+- Real-time video processing capabilities
+- Adaptive thresholding for different lighting conditions
+- Hand and face detection integration
+- Web-based interface for easy testing

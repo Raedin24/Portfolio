@@ -1,0 +1,120 @@
+---
+title: "Tweet Sentiment Analysis with Machine Learning"
+publishedAt: "2023-07-18"
+summary: "A machine learning project for analyzing tweet sentiment using NLP preprocessing and classification algorithms to predict positive, negative, and neutral emotions."
+images: 
+  - "/images/projects/performing-twitter-sentiment-analysis1.jpg"
+team:
+  - name: "Kofi Corletey"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/matey-corletey/"
+  - name: "George Adjei"
+    avatar: "/images/avatar-02.jpg"
+    linkedIn: "https://www.linkedin.com/in/georgekofioheneadjei/"
+  - name: "Vincencia Jarawura"
+    avatar: "/images/avatar-01.jpg"
+    linkedIn: "https://www.linkedin.com/in/vincencia-welagamo-j-5098ba269/"
+---
+
+import CodeBlock from '@/components/mdx/CodeBlock'
+
+## Overview
+
+This project implements a comprehensive **tweet sentiment analysis** system using machine learning techniques. The model classifies tweets into three sentiment categories: **positive**, **negative**, and **neutral**, leveraging advanced NLP preprocessing and multiple classification algorithms.
+
+---
+
+## Key Features
+
+- Advanced text preprocessing pipeline with tokenization, stemming, and lemmatization
+- TF-IDF vectorization for feature extraction
+- Multiple classifier implementations (SVM and Logistic Regression)
+- Comprehensive model evaluation with accuracy, precision, recall, and F1-score
+- Real-time sentiment prediction capabilities
+- Data visualization for class distribution analysis
+
+---
+
+## Technical Approach
+
+The project follows a systematic machine learning workflow:
+
+**Data Preprocessing**: Implements a robust text cleaning pipeline including:
+- URL and HTML tag removal
+- Tokenization and punctuation removal
+- Stopword elimination using NLTK
+- Stemming with Snowball Stemmer
+- Lemmatization with WordNet
+
+**Feature Engineering**: Utilizes TF-IDF vectorization with optimized parameters to convert text into numerical features while handling the high dimensionality of tweet data.
+
+**Model Selection**: Implements and compares multiple classifiers:
+- Support Vector Machine (SVM) with linear kernel
+- Logistic Regression with optimized iterations
+
+---
+
+## Implementation Details
+
+The sentiment analysis pipeline consists of several key components:
+
+1. **Data Loading & Exploration**: Analysis of class distribution and data quality
+2. **Text Cleaning**: Comprehensive preprocessing to handle Twitter-specific text patterns
+3. **Feature Extraction**: TF-IDF vectorization with max_features=2500 for dimensionality control
+4. **Model Training**: 80-20 train-validation split with proper cross-validation
+5. **Evaluation**: Multi-class classification metrics and detailed performance analysis
+
+---
+
+## Results
+
+The models achieved strong performance on the tweet sentiment classification task:
+
+**Logistic Regression Results:**
+- Accuracy: 68%
+- Precision: 0.70 (macro average)
+- Recall: 0.67 (macro average)
+- F1-score: 0.68 (macro average)
+
+**SVM Results:**
+- Accuracy: 68%
+- Precision: 0.72 (macro average)
+- Recall: 0.65 (macro average)
+- F1-score: 0.68 (macro average)
+
+The system shows particularly strong performance in identifying positive sentiments while effectively handling the challenges of neutral sentiment classification.
+
+---
+
+## Technical Challenges & Solutions
+
+**Class Imbalance**: Addressed through proper evaluation metrics and stratified sampling
+**Short Text Complexity**: Implemented specialized preprocessing for tweet-specific patterns
+**Sarcasm Detection**: Acknowledged as a limitation for future improvement
+**Real-time Processing**: Optimized preprocessing pipeline for efficient prediction
+
+---
+
+## Future Enhancements
+
+- Integration of deep learning models (LSTM, BERT) for improved accuracy
+- Real-time sentiment analysis API deployment
+- Expanded emotion classification beyond positive/negative/neutral
+- Multilingual sentiment analysis capabilities
+- Sarcasm and irony detection improvements
+- Integration with social media platforms for live analysis
+- Advanced visualization dashboard for sentiment trends
+
+---
+
+## Applications
+
+This sentiment analysis system has practical applications in:
+- Social media monitoring and brand management
+- Customer feedback analysis
+- Market research and trend analysis
+- Political sentiment tracking
+- Customer service automation
+- Content recommendation systems
+
+The modular design allows for easy integration into larger analytics platforms and real-time monitoring systems.

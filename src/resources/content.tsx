@@ -58,9 +58,8 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm {person.firstName}, a backend & ML developer focused on secure authentication, real‑time
-      systems, and data‑driven products. I enjoy building reliable APIs, optimizing databases, and
-      tuning models that solve real problems.
+      I'm {person.firstName}, a backend & ML developer focused on building secure, real‑time
+      systems, and developing data‑driven products that solve real problems.
     </>
   ),
 };
@@ -79,7 +78,7 @@ const about: About = {
   },
   calendar: {
     display: true,
-    link: "https://cal.com",
+    link: "https://cal.com/matey-kofi-corletey-oonse8/30min",
   },
   intro: {
     display: true,
@@ -87,9 +86,8 @@ const about: About = {
     description: (
       <>
         {person.firstName} is a backend and machine learning developer with hands‑on experience in
-        Python/Django, Go, RESTful APIs, PostgreSQL, and PyTorch. He blends systems design with
-        applied ML, with a strong focus on security (OTP, device binding, audit logging), real‑time
-        dashboards, and data quality for model training.
+        Python/Django, RESTful APIs, PostgreSQL, and PyTorch. He blends systems design with
+        applied ML, with a strong focus on security, real‑time dashboards, and data quality for model training.
       </>
     ),
   },

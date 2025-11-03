@@ -1,0 +1,155 @@
+---
+title: "Fine-Tuned Channel–Spatial Attention Transformer for Facial Expression Recognition"
+publishedAt: "2025-02-01"
+tag: "AI Research"
+image: "/images/gallery/channel-and-spatial-attention-module.png"
+---
+
+## Overview
+
+This project presents the implementation of the **Fine-Tuned Channel–Spatial Attention Transformer (FT-CSAT)** — an architecture that enhances facial expression recognition (FER) by combining *transformer-based global perception* with *attention-driven local feature extraction*.  
+Developed as part of a final-year research thesis at the University of Ghana, the model was designed to address persistent FER challenges such as facial occlusions, head pose variations, and demographic diversity.
+
+## Motivation
+
+Facial expressions convey emotional and psychological states, making FER essential in healthcare, security, and human–computer interaction.  
+Traditional CNN models struggle with occlusions and pose variations, while pure transformer models often require massive data and computation.  
+The FT-CSAT bridges these two paradigms — fusing the `CSWin Transformer` with a *Channel–Spatial Attention (CSA)* module and a *Scaling & Shifting Features (SSF)* fine-tuning technique — to improve recognition accuracy without excessive parameters.
+
+## Architecture
+
+The FT-CSAT architecture enhances a transformer backbone (`CSWin-T`) by modeling **channel dependencies**, **spatial saliency**, and **parameter-efficient fine-tuning** as follows.
+
+---
+
+### 1. Channel Attention (CA)
+
+Given an intermediate feature map $F \in \mathbb{R}^{C\times H\times W}$:
+
+$$
+M_c(F) = \sigma(W_2 \cdot \delta(W_1 \cdot GAP(F))) \\
+F_c = M_c(F) \odot F
+$$
+
+Where:
+
+- $GAP(\cdot)$ — global average pooling → $\mathbb{R}^C$
+- $W_1 \in \mathbb{R}^{\frac{C}{r} \times C}$, $W_2 \in \mathbb{R}^{C \times \frac{C}{r}}$ — learned weights  
+- $\delta$ — ReLU activation  
+- $\sigma$ — sigmoid activation  
+
+This mechanism emphasizes inter-channel dependencies, weighting each channel’s relative importance.
+
+---
+
+### 2. Spatial Attention (SA)
+
+To highlight key facial regions, a spatial mask is derived from the channel-refined feature $F_c$:
+
+$$
+M_s(F_c) = \sigma(f_{7\times7}([AvgPool(F_c); MaxPool(F_c)])) \\
+F_{cs} = M_s(F_c) \odot F_c
+$$
+
+Where $f_{7\times7}$ is a convolution with a 7×7 kernel, and $[\,;\,]$ denotes concatenation.  
+The resulting spatial attention map focuses on *where* discriminative facial features appear in the image.
+
+---
+
+### 3. Combined Channel–Spatial Attention
+
+Sequential application of channel and spatial attention yields:
+
+$$
+F' = M_s(F) \odot (M_c(F) \odot F)
+$$
+
+This captures both **what** (channel relevance) and **where** (spatial focus) cues, leading to richer emotion-aware representations.
+
+---
+
+### 4. Scaling & Shifting Fine-Tuning (SSF)
+
+To efficiently adapt pretrained transformer weights, SSF introduces lightweight scaling and shifting parameters:
+
+$$
+\hat{F} = \gamma \odot F' + \beta
+$$
+
+Where $\gamma$ and $\beta$ are learnable tensors (same shape as feature channels)  
+that modulate the frozen backbone features.  
+This enables **parameter-efficient fine-tuning** by updating only a small subset of the model.
+
+---
+
+### 5. Overall Pipeline
+
+1. Input face image → `CSWin-T` transformer backbone  
+2. Extracted feature maps → Channel–Spatial Attention block  
+3. Fine-tuned with SSF layers for domain adaptation  
+4. Classification head → emotion logits across 7 or 8 classes
+
+---
+
+## Datasets
+
+Two benchmark FER datasets were used for training and evaluation:
+
+- **RAF-DB (Real-world Affective Faces Database)** — 29,672 labeled images spanning seven basic emotions under varying conditions.  
+- **FERPlus** — 35,887 grayscale facial images across eight emotion categories, including *Contempt*, offering realistic lighting and demographic variability.
+
+Images were resized to $224\times224$, normalized using ImageNet statistics, and augmented with Gaussian noise to simulate imperfect real-world data.
+
+## Training Setup
+
+- **Base model:** CSWin-Tiny Transformer  
+- **Optimizer:** Adam ($lr = 9\times10^{-5}$, weight decay $10^{-4}$)  
+- **Loss:** Cross-Entropy  
+- **Batch size:** 32 (reduced to 16 for FERPlus due to GPU limits)  
+- **Hardware:** NVIDIA GTX 1660 Ti (6 GB) and Google Colab T4 GPU  
+
+A StepLR scheduler reduced the learning rate periodically to improve convergence, and checkpoints preserved the best-performing models.
+
+## Results
+
+<Table
+  data={{
+    headers: [
+      { content: "Dataset", key: "dataset" },
+      { content: "Accuracy (FT-CSAT)", key: "ftcsat" },
+      { content: "Baseline (Yao et al., 2023)", key: "baseline" }
+    ],
+    rows: [
+      ["RAF-DB", "84.75 %", "88.61 %"],
+      ["FERPlus", "76.55 %", "89.26 %"]
+    ]
+  }}
+/>
+
+The model achieved strong performance despite limited compute resources, validating the reproducibility of Yao et al.’s results while demonstrating resilience to real-world imperfections.  
+Overfitting was mitigated via L2 regularization and learning-rate scheduling, though performance on FERPlus was constrained by GPU memory.
+
+## Observations
+
+- The CSA module improved focus on critical facial regions, boosting generalization.  
+- SSF fine-tuning proved highly efficient, delivering improved results with minimal parameter growth.  
+- Training on diverse datasets enhanced robustness to occlusion and pose variations.
+
+## Limitations
+
+1. **Computational overhead:** Transformers remain GPU-intensive for large datasets.  
+2. **Dataset diversity:** Existing datasets, while broad, do not fully capture global demographic variation.  
+3. **Bias:** Further work is needed to analyze and reduce demographic and cultural biases.
+
+## Future Directions
+
+- Train on larger, more diverse datasets for better generalization.  
+- Explore real-time optimization for edge deployment.  
+- Integrate temporal data for video-based FER.  
+- Investigate graph-based or multi-head adaptive attention for improved spatial understanding.  
+- Extend to multi-modal emotion recognition, combining facial and audio cues.
+
+## Conclusion
+
+The Fine-Tuned Channel–Spatial Attention Transformer (FT-CSAT) demonstrates that combining transformer backbones, attention mechanisms, and lightweight fine-tuning can significantly improve FER robustness and accuracy.  
+Despite computational challenges, the model shows promise for deployment in domains like healthcare, surveillance, and affective computing, paving the way for more human-aware AI systems.
