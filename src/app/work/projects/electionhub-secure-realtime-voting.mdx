@@ -1,7 +1,7 @@
 ---
-title: "ElectionHub – Secure Real‑Time Voting"
-summary: "Secure voting platform with OTP, device binding, WebSockets, and tamper‑evident audit logs."
-date: "2025-04-15"
+title: "ElectionHub – Secure Real-Time Voting"
+summary: "Full-stack voting platform with OTP login, device binding, WebSockets, and tamper-evident logs."
+publishedAt: "2025-04-15"
 images: 
   - "/images/projects/electionhub/electionhub-01.png"
   - "/images/projects/electionhub/electionhub-02.png"
@@ -20,58 +20,50 @@ team:
 link: "https://electionhub.net"
 ---
 
-import Image from "next/image";
+# ElectionHub – Secure Real-Time Voting
 
-# ElectionHub – Secure Real‑Time Voting
-
-Backend‑first voting system delivering instant tallies with strong authentication and auditability.
-
-## Overview
-ElectionHub is a production‑grade voting platform I architected and implemented at Bits and Bytes Consulting. It enables student electoral commissions to run multiple, concurrent elections with secure identity verification and real‑time dashboards.
-
-**Impact:** handled **4,000+ votes** across three simultaneous elections with **zero downtime** and instant results.
-
-## Role & Responsibilities
-- Architected backend (Python, Django, DRF) and schema (PostgreSQL)
-- Implemented OTP verification, device locking, JWT auth, and role‑based access control
-- Built WebSocket channels for live tallies and event streams
-- Wrote tamper‑evident audit logging and integrity checks
-- Packaged deployments with Docker; served via Nginx + systemd on DigitalOcean
-
-## Architecture
-- **API:** Django REST Framework; auth via JWT (short‑lived access + refresh)
-- **DB:** PostgreSQL with normalized ballots, candidates, contests; foreign‑key constraints + unique indexes
-- **Realtime:** Django Channels/WebSockets broadcasting per‑contest tallies
-- **Caching/Rate limiting:** Redis (OTP attempts, token blacklists)
-- **Infra:** Dockerized app on DigitalOcean Droplet; Nginx reverse proxy; HTTPS via Let’s Encrypt
-
-```mermaid
-flowchart LR
-  Client -->|OTP + JWT| API[DRF API]
-  API --> DB[(PostgreSQL)]
-  API --> Redis[(Redis)]
-  API --> WS[Channels / WebSockets]
-  WS --> Dash[Results Dashboard]
-  Nginx --- API
-```
-
-## Security & Integrity
-- **OTP flows:** email/SMS OTP with expiry + sliding rate‑limits
-- **Device binding:** fingerprint hash stored server‑side; suspicious changes trigger re‑verification
-- **Audit logs:** append‑only event store (ballot cast, tally, admin action) with hash chaining for tamper evidence
-- **RBAC:** commissioner, clerk, observer, voter roles; least‑privilege admin panels
-
-## Key Features
-- Parallel elections and contests
-- Real‑time results + per‑contest streams
-- Offline‑tolerant ballots with conflict resolution
-- Exportable reports (CSV/PDF) and turnout analytics
-
-## Outcomes
-- Adopted by university student electoral bodies; smooth elections, instant tallies
-- Operational runbooks enabled repeatable deploys and quick incident response
-
-## Tech Stack
-**Python, Django, DRF, PostgreSQL, Redis, Channels/WebSockets, Docker, Nginx, Let’s Encrypt, DigitalOcean**
+End-to-end digital voting platform delivering **instant results**, **OTP-based authentication**, and **verifiable audit trails** for transparent online elections.
 
 ---
+
+## Overview
+
+ElectionHub enables electoral bodies to manage multiple concurrent elections with strong identity verification, real-time dashboards, and tamper-evident logging.  
+Built with a focus on **security, transparency, and scalability**, it has processed over **4,000 verified votes** with zero downtime.
+
+---
+
+## Role & Responsibilities
+
+- Architected backend (Django REST Framework + PostgreSQL)  
+- Implemented OTP login, device fingerprinting, and JWT session handling  
+- Built real-time tally updates using Django Channels and WebSockets  
+- Designed hash-chained audit logs for provable integrity  
+- Deployed via Docker and Nginx on hardened DigitalOcean infrastructure  
+
+---
+
+## Architecture
+
+- **Frontend:** React + Vite + Tailwind CSS + Recharts (for live dashboards)  
+- **Backend:** Django REST Framework with Redis caching and rate limiting  
+- **Database:** PostgreSQL (ACID-compliant, normalized schema)  
+- **Realtime:** Django Channels / WebSockets for vote streams  
+- **Security:** OTP auth, JWT tokens, hash-linked logs, and strict RBAC  
+- **Infra:** Dockerized services behind Nginx + HTTPS (Let’s Encrypt)  
+
+---
+
+## Key Features
+
+- Multi-election and multi-role support (Voter, Admin, EC)  
+- Live dashboards with real-time vote counts  
+- Device-bound OTP login and replay protection  
+- Append-only audit logs for verifiable transparency  
+- Automated deploys and encrypted backups  
+
+---
+
+## Outcome
+
+Adopted by student election commissions for transparent digital voting, achieving real-time results, secure authentication, and provable system integrity.

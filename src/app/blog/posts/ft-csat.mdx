@@ -27,8 +27,10 @@ The FT-CSAT architecture enhances a transformer backbone (`CSWin-T`) by modeling
 Given an intermediate feature map $F \in \mathbb{R}^{C\times H\times W}$:
 
 $$
-M_c(F) = \sigma(W_2 \cdot \delta(W_1 \cdot GAP(F))) \\
-F_c = M_c(F) \odot F
+\begin{aligned}
+M_c(F) &= \sigma(W_2 \cdot \delta(W_1 \cdot GAP(F))) \\
+F_c &= M_c(F) \odot F
+\end{aligned}
 $$
 
 Where:
@@ -47,8 +49,10 @@ This mechanism emphasizes inter-channel dependencies, weighting each channel’s
 To highlight key facial regions, a spatial mask is derived from the channel-refined feature $F_c$:
 
 $$
-M_s(F_c) = \sigma(f_{7\times7}([AvgPool(F_c); MaxPool(F_c)])) \\
-F_{cs} = M_s(F_c) \odot F_c
+\begin{aligned}
+M_s(F_c) &= \sigma(f_{7\times7}([AvgPool(F_c); MaxPool(F_c)])) \\
+F_{cs} &= M_s(F_c) \odot F_c
+\end{aligned}
 $$
 
 Where $f_{7\times7}$ is a convolution with a 7×7 kernel, and $[\,;\,]$ denotes concatenation.  
