@@ -138,7 +138,7 @@ const about: About = {
     title: "Education & Certifications",
     institutions: [
       {
-        name: "University of Ghana — BSc. Computer Science (2021–2024)",
+        name: "University of Ghana — BSc. Computer Science",
         description: <>Relevant coursework: Machine Learning, Data Structures, Computer Networks, Software Engineering.</>,
       },
       {
