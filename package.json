@@ -1,9 +1,9 @@
 {
   "name": "kofi-portfolio",
   "version": "1.0.0",
-  "description": "Personal portfolio showcasing backend and ML projects",
+  "description": "Personal portfolio: software engineering, cloud and DevOps projects",
   "author": "Matey Kofi Corletey",
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Raedin24/Portfolio"
