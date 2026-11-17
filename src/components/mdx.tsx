@@ -249,6 +249,11 @@ export function CustomMDX(props: CustomMDXProps) {
     <MDXRemote
       {...props}
       options={{
+        // MDX here comes only from this repository's own .mdx files, never from visitors.
+        // Pages pass objects to components (e.g. <Table data={{ ... }} />), so plain
+        // expressions stay enabled; dangerous globals (eval, Function, process) stay blocked.
+        blockJS: false,
+        blockDangerousJS: true,
         mdxOptions: {
           remarkPlugins: [remarkFrontmatter, remarkGfm, remarkMath],
           rehypePlugins: [
