@@ -1,0 +1,65 @@
+---
+title: "Ledger — Offline Mobile Money Expense Tracker"
+summary: "Android app that reads Ghanaian mobile money alerts on the phone and turns them into an encrypted, private expense ledger. It has no network permission at all."
+publishedAt: "2026-08-02"
+images:
+  - "/images/projects/ledger/cover.webp"
+team:
+  - name: "Kofi Corletey"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/in/matey-corletey/"
+link: "https://raedin24.github.io/ledger/"
+---
+
+## A small Ghanaian money problem
+
+You make a payment.<br />
+You get the alert.<br />
+You swipe it away.<br />
+At the end of the month, you are asking yourself, "But what did I actually spend all that money on?"
+
+Ledger is a free Android app that turns supported **MTN MoMo**, **GhanaPay** and **Telecel Cash** alerts into a private spending history on your phone.
+
+It can show your money in and out, daily spending, categories, budgets, cash on hand, and monthly trends. It does not need an account or internet access.
+
+## How it works
+
+Every mobile money provider already sends an SMS alert for each transaction. Ledger reads those alerts on the phone, pulls out the amount, counterparty, fee and balance, and files them into a ledger. There is no account, no sync and no server.
+
+[Download for Android](https://raedin24.github.io/ledger/) · Source code: [github.com/Raedin24/ledger](https://github.com/Raedin24/ledger)
+
+## Privacy by construction
+
+The app has **no `INTERNET` permission**. The permission is removed from the merged Android manifest, so the operating system blocks network calls even if a bundled library tried one. Data leaves the phone only through an export the user makes.
+
+- **Encrypted database.** Room with SQLCipher. The database passphrase is itself encrypted with an Android Keystore key (StrongBox where available) and is never stored in plain text.
+- **Optional app lock.** PIN with biometrics on top, kept separate from the database key so new alerts are still saved while the app is locked.
+- **SMS text is never stored.** A message is held only while it is parsed. The transaction model has no field for it.
+- **No screenshots or cloud backups.** `FLAG_SECURE` and `allowBackup="false"` keep the ledger off screenshots, the Recents screen and cloud backups.
+- **No analytics, advertising or third-party services.**
+
+## Parsing that refuses to guess
+
+One-time passwords and marketing messages arrive from the same senders as real transactions. Ledger keeps them out by requiring a positive match rather than a blocklist. The key is the **balance after the transaction**: every real wallet movement reports one, and OTPs and marketing messages never do. Anything the parser is not sure about goes to a review queue for the user to confirm or correct, instead of being guessed.
+
+## Features
+
+- **Automatic capture** of new alerts, plus a one-time import of past messages already in the inbox.
+- **Categories and rules.** Spending is sorted automatically, and confirming a counterparty can turn it into a rule.
+- **Budgets** per category, with one notification when spending gets close and one if it goes over.
+- **Cash tracking** on a calculator keypad. A wallet cash-out can be moved to the cash ledger so the withdrawal and the later purchase are not counted twice.
+- **Your own month.** The month can start on payday, with leftover savings optionally carried forward.
+- **Export and backup** to JSON, CSV or a passphrase-encrypted `.ledger` file. Restoring merges with existing data and never deletes or duplicates a transaction.
+
+## Architecture
+
+| Module | What it is |
+|---|---|
+| `core-domain` | Plain Kotlin with no Android dependencies: parsing, validation, de-duplication and categorisation, unit tested on the JVM. |
+| `app` | The Android app: Jetpack Compose (Material 3), MVVM with a repository, Hilt, and Room with SQLCipher. |
+
+Keeping the parsing in a plain Kotlin module means it can be tested against real message shapes without an emulator. Adding a provider is a small change: a new institution value and a sender template.
+
+## Status
+
+Version 0.2.0, licensed GPL-3.0-or-later. Releases are signed with a single key and distributed as an APK from the [download page](https://raedin24.github.io/ledger/), with the SHA-256 certificate digest published in each release's notes.

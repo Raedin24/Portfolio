@@ -5,7 +5,7 @@ const person: Person = {
   firstName: "Kofi",
   lastName: "Corletey",
   name: `Kofi Corletey`,
-  role: "Backend Engineer & Machine Learning Developer",
+  role: "Software Engineer — Backend, Cloud & DevOps",
   avatar: "/images/avatar.jpg",
   email: "mkcorletey@gmail.com",
   location: "Africa/Accra", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
@@ -44,22 +44,22 @@ const home: Home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building scalable systems and intelligent models.</>,
+  headline: <>Building secure, scalable systems, from code to cloud.</>,
   featured: {
   display: true,
   title: (
   <Row gap="12" vertical="center">
-  <strong className="ml-4">ElectionHub</strong>{" "}
+  <strong className="ml-4">Ledger</strong>{" "}
   <Line background="brand-alpha-strong" vert height="20" />
   <Text marginRight="4" onBackground="brand-medium">Featured project</Text>
   </Row>
   ),
-  href: "/work/electionhub-secure-realtime-voting",
+  href: "/work/ledger",
   },
   subline: (
     <>
-      I'm {person.firstName}, a backend & ML developer focused on building secure, real‑time
-      systems, and developing data‑driven products that solve real problems.
+      I'm {person.firstName}, a software engineer focused on secure backends, reliable cloud
+      infrastructure and automated delivery, building products that solve real problems.
     </>
   ),
 };
@@ -85,9 +85,13 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        {person.firstName} is a backend and machine learning developer with hands‑on experience in
-        Python/Django, RESTful APIs, PostgreSQL, and PyTorch. He blends systems design with
-        applied ML, with a strong focus on security, real‑time dashboards, and data quality for model training.
+        {person.firstName} is a software engineer with a background spanning full‑stack development,
+        cloud engineering, DevOps and machine learning. He has designed and deployed highly available
+        cloud infrastructure with automated CI/CD pipelines, infrastructure monitoring and security‑first
+        cloud practices. He contributed to a secure, real‑time voting platform and supported large‑scale
+        machine learning work through visual‑language dataset annotation, quality assurance and
+        research‑driven model development. His focus is system design, secure API development and
+        end‑to‑end product delivery.
       </>
     ),
   },
@@ -96,8 +100,18 @@ const about: About = {
     title: "Work Experience",
     experiences: [
       {
+        company: "CoreSoft Technologies",
+        timeframe: "May 2026 – Present",
+        role: "Software Engineer",
+        achievements: [
+          <>Build and maintain <b>lending</b>, <b>finance</b> and <b>HR</b> systems that handle money and personal data in a regulated environment.</>,
+          <>Work within a review-and-test discipline: branch-based Git workflow, code review, automated tests and CI-built releases.</>,
+        ],
+        images: [],
+      },
+      {
         company: "Bits and Bytes Consulting",
-        timeframe: "Jan 2025 – Present",
+        timeframe: "Jan 2025 – Aug 2025",
         role: "Principal Backend Developer (ElectionHub)",
         achievements: [
         <>Architected a secure, real‑time voting platform (Python, Django, DRF, PostgreSQL, WebSockets) with OTP verification, device locking, JWT auth, and tamper‑evident audit logs.</>,
@@ -140,6 +154,14 @@ const about: About = {
       {
         name: "University of Ghana — BSc. Computer Science",
         description: <>Relevant coursework: Machine Learning, Data Structures, Computer Networks, Software Engineering.</>,
+      },
+      {
+        name: "Azubi Africa — Certificate, Cloud Computing",
+        description: <>AWS infrastructure, DevOps and deployment automation. Built a highly available multi-tier AWS application with a GitHub Actions CI/CD pipeline.</>,
+      },
+      {
+        name: "AWS Cloud Essentials — Amazon Web Services (AWS)",
+        description: <>Foundations of AWS cloud concepts, core services, security, and pricing and support models.</>,
       },
       {
         name: "Huawei HCIA Security — Certified",
