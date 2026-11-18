@@ -1,91 +1,51 @@
-# Magic Portfolio
+# Kofi Corletey — Portfolio
 
-Magic Portfolio is a simple, clean, beginner-friendly portfolio template. It supports an MDX-based content system for projects and blog posts, an about / CV page and a gallery.
+My personal site: who I am, where I have worked, and the projects I have built.
 
-View the demo [here](https://demo.magic-portfolio.com).
+Live at **[raedin-24.vercel.app](https://raedin-24.vercel.app)**.
 
-![Magic Portfolio](public/images/og/home.jpg)
+I am a software engineer working across backend development, cloud infrastructure and DevOps, with a background in machine learning. The site has:
 
-## Getting started
+- **About:** introduction, work experience, education and certifications, and technical skills.
+- **Work:** project case studies, including Ledger (an offline mobile money expense tracker for Android) and ElectionHub (a secure, real-time voting platform).
+- **Blog:** write-ups on the technology and security behind my projects.
 
-**1. Clone the repository**
-```
-git clone https://github.com/once-ui-system/magic-portfolio.git
-```
+## Running it locally
 
-**2. Install dependencies**
-```
+You need Node.js 18.17 or newer.
+
+```sh
 npm install
-```
-
-**3. Run dev server**
-```
 npm run dev
 ```
 
-**4. Edit config**
-```
-src/resources/once-ui.config.js
-```
+The site is then at http://localhost:3000.
 
-**5. Edit content**
-```
-src/resources/content.js
-```
+To check a production build:
 
-**6. Create blog posts / projects**
-```
-Add a new .mdx file to src/app/blog/posts or src/app/work/projects
+```sh
+npm run build
+npm start
 ```
 
-Magic Portfolio was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+## Where things live
 
-## Documentation
+| What | Where |
+|---|---|
+| Profile, role, experience, education and skills | `src/resources/content.tsx` |
+| Site settings: base URL, enabled pages, theme | `src/resources/once-ui.config.ts` |
+| Project case studies (one `.mdx` file each) | `src/app/work/projects/` |
+| Blog posts (one `.mdx` file each) | `src/app/blog/posts/` |
+| Images | `public/images/` |
 
-Docs available at: [docs.once-ui.com](https://docs.once-ui.com/docs/magic-portfolio/quick-start)
+Adding a project or post is a matter of adding an `.mdx` file to the right folder. The front matter at the top of the file sets its title, summary, date and cover images; the site lists it automatically.
 
-## Features
+## Deployment
 
-### Once UI
-- All tokens, components & features of [Once UI](https://once-ui.com)
+The site is deployed on Vercel from the `main` branch.
 
-### SEO
-- Automatic open-graph and X image generation with next/og
-- Automatic schema and metadata generation based on the content file
+## Credits and licence
 
-### Design
-- Responsive layout optimized for all screen sizes
-- Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
+This site is built on [Magic Portfolio](https://github.com/once-ui-system/magic-portfolio) by [Once UI](https://once-ui.com), a Next.js portfolio template. I have changed its content, pages and styling for my own use.
 
-### Content
-- Render sections conditionally based on the content file
-- Enable or disable pages for blog, work, gallery and about / CV
-- Generate and display social links automatically
-- Set up password protection for URLs
-
-### Localization
-- A localized, earlier version of Magic Portfolio is available with the next-intl library
-- To use localization, switch to the 'i18n' branch
-
-## Creators
-
-Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
-
-## Get involved
-
-- Join the Design Engineers Club on [Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
-- Deployed your docs? Share it on the [Once UI Hub](https://once-ui.com/hub) too! We feature our favorite apps on our landing page.
-
-## License
-
-Distributed under the CC BY-NC 4.0 License.
-- Attribution is required.
-- Commercial usage is not allowed.
-- You can extend the license to [Dopler CC](https://dopler.app/license) by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
-
-See `LICENSE.txt` for more information.
-
-## Deploy with Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&project-name=portfolio&repository-name=portfolio&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&demo-title=Magic%20Portfolio&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-portfolio.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-portfolio%2Fmain%2Fpublic%2Fimages%2Fog%2Fhome.jpg)
+The template is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/); see [`LICENSE`](LICENSE). That licence applies to this repository too, so it may not be used commercially.

@@ -1,4 +1,8 @@
+import { fileURLToPath } from "node:url";
 import mdx from "@next/mdx";
+
+// Pin the project root so a stray lockfile in a parent folder is not taken as the workspace root.
+const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 
 const withMDX = mdx({
   extension: /\.mdx?$/,
@@ -7,6 +11,8 @@ const withMDX = mdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: projectRoot,
+  turbopack: { root: projectRoot },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   transpilePackages: ["next-mdx-remote"],
   images: {
